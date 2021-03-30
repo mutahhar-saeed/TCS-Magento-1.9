@@ -9,7 +9,7 @@ class BitFactor_Tcs_Helper_Data extends Mage_Core_Helper_Abstract
         if (empty($data)) {
             $curl = curl_init();
             curl_setopt_array($curl, [
-                CURLOPT_URL => "https://apis.tcscourier.com/production/v1/cod/origins",
+                CURLOPT_URL => "https://apis.tcscourier.com/production/v1/cod/cities",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -29,7 +29,7 @@ class BitFactor_Tcs_Helper_Data extends Mage_Core_Helper_Abstract
             }
             curl_close($curl);
         }
-        return json_decode($data)->allOrigins;
+        return json_decode($data)->allCities;
     }
 }
 	 

@@ -66,8 +66,8 @@ $cities = $helper->getTcsCitiesData();
                                     name="destinationCityName">
                                 <option value="">Please select City</option>
                                 <?php foreach($cities as $key=>$value){ ?>
-                                    <?php $selected = strtolower($value->areaName)==strtolower($form_data['destinationCityName'])?'selected':''; ?>
-                                    <option value="<?php echo $value->areaName ?>" <?php echo $selected ?>><?php echo $value->areaName ?></option>
+                                    <?php $selected = strtolower($value->cityName)==strtolower($form_data['destinationCityName'])?'selected':''; ?>
+                                    <option value="<?php echo $value->cityName ?>" <?php echo $selected ?>><?php echo $value->cityName ?></option>
                                 <?php } ?>
                             </select>
                             <br><small>String name of the city from where the shipment will be delivered</small>
