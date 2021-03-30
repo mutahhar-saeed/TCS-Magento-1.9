@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <BitFactor_Tcs>
+            <version>0.1.0</version>
+        </BitFactor_Tcs>
+    </modules>
+    <global>
+        <blocks>
+            <tcs>
+                <class>BitFactor_Tcs_Block</class>
+            </tcs>
+        </blocks>
+        <helpers>
+            <tcs>
+                <class>BitFactor_Tcs_Helper</class>
+            </tcs>
+        </helpers>
+    </global>
+    <admin>
+        <routers>
+            <tcs>
+                <use>admin</use>
+                <args>
+                    <module>BitFactor_Tcs</module>
+                    <frontName>admin_tcs</frontName>
+                </args>
+            </tcs>
+        </routers>
+    </admin>
+    <adminhtml>
+        <events>
+            <controller_action_layout_render_before_adminhtml_sales_order_view>
+                <observers>
+                    <bitfactor_tcs_order_view_button>
+                        <class>BitFactor_Tcs_Model_Observer</class> <!-- observers class alias -->
+                        <method>addBookingAction</method>  <!-- observer's method to be called -->
+                    </bitfactor_tcs_order_view_button>
+                </observers>
+            </controller_action_layout_render_before_adminhtml_sales_order_view>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <bitfactor_tcs_custom_order_view_info>
+                        <class>BitFactor_Tcs_Model_Observer</class>
+                        <method>getTcsBookWidget</method>
+                    </bitfactor_tcs_custom_order_view_info>
+                </observers>
+            </core_block_abstract_to_html_after>
+        </events>
+
+        <layout>
+            <updates>
+                <bitfactor_tcs>
+                    <file>bitfactortcs.xml</file>
+                </bitfactor_tcs>
+            </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <bitfactor_tcs_section>
+            <bitfactor_tcs_group>
+                <origin_city>Karachi</origin_city>
+            </bitfactor_tcs_group>
+        </bitfactor_tcs_section>
+    </default>
+</config> 

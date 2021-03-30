@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_sales_order_view>
+        <reference name="order_info">
+            <block type="tcs/adminhtml_sales_order_view_info_block" name="tcs.order.info.custom.block" template="bitfactor/tcs/order_info.phtml" before="order_history"/>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <tcs_adminhtml_sales_order_index_add>
+        <reference name="root">
+            <remove name="header"/>
+            <remove name="footer"/>
+            <remove name="top.menu" />
+            <remove name="menu" />
+            <remove name="top.links" />
+            <remove name="top.container" />
+        </reference>
+        <reference name="content">
+            <block type="tcs/adminhtml_sales_order_view_shipment"  name='tcs_admin_addshipment'
+                   template="bitfactor/tcs/addShipment.phtml" before="-"/>
+        </reference>
+    </tcs_adminhtml_sales_order_index_add>
+</layout>

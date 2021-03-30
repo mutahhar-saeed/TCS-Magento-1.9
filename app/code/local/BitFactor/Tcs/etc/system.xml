@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <bitfactor_tcs_tab translate="label" module="tcs">
+            <label>TCS Courier</label>
+            <sort_order>3</sort_order>
+        </bitfactor_tcs_tab>
+    </tabs>
+    <sections>
+        <bitfactor_tcs_section translate="label" module="tcs">
+            <label>TCS Settings</label>
+            <tab>bitfactor_tcs_tab</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>0</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <bitfactor_tcs_group translate="label">
+                    <label>TCS Merchant Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable_disable translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Yes to enable module</comment>
+                        </enable_disable>
+                        <account_id translate="label">
+                            <label>Account Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Account Id should be same as provided by TCS (e.g 012345)</comment>
+                        </account_id>
+                        <api_username translate="label">
+                            <label>User Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>User Name should be same as provided by TCS</comment>
+                        </api_username>
+                        <api_password translate="label">
+                            <label>Password</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Password should be same as provided by TCS</comment>
+                        </api_password>
+                        <bitfactor_tcs_client_id translate="label">
+                            <label>Client ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                Client Id Provided by TCS. e.g. xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+                                if you don't have one goto "https://developer.tcscourier.com/" and follow instructions.
+                            </comment>
+                        </bitfactor_tcs_client_id>
+                        <origin_city translate="label">
+                            <label>Origin City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Please provide origin city. e.g. Karachi</comment>
+                        </origin_city>
+                        <!--<api_url translate="label">
+                            <label>API URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>https://apis.tcscourier.com/production/v1/cod</comment>
+                        </api_url>-->
+                    </fields>
+                </bitfactor_tcs_group>
+            </groups>
+            <groups>
+                <tcs_order_group translate="label">
+                    <label>TCS Order Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <shipment translate="label">
+                            <label>Order Status After Shipment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Order status after shipment created. Default status will be Processing</comment>
+                        </shipment>
+                        <remark translate="label">
+                            <label>Default Remark</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Default Remarks</comment>
+                        </remark>
+                        <weight translate="label">
+                            <label>Weight</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Default Weight Will be use if order weight 0</comment>
+                        </weight>
+                    </fields>
+                </tcs_order_group>
+            </groups>
+        </bitfactor_tcs_section>
+    </sections>
+</config>

@@ -1,0 +1,189 @@
+<?php
+$form_data = $this->getDataForShipment();
+$helper = Mage::helper("tcs");
+$cities = $helper->getTcsCitiesData();
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend">Book Information</h4>
+        <div class="form-buttons"></div>
+    </div>
+    <div id="_accountbase_fieldset" class="fieldset ">
+        <div class="hor-scroll">
+            <?php
+            $enable = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/enable_disable');
+            $client_id = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/bitfactor_tcs_client_id');
+            $userName = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/api_username');
+            $account_id = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/account_id');
+            $error = 0;
+            if (!$enable or $client_id == '' or $userName == '' or $account_id == '') {
+                $error = 1; ?>
+                <h4 style="color: red;"> Please configure TCS Configuration before using TCS Shipment. </h4>
+            <?php } ?>
+            <form action="<?php echo $this->escapeHtml($this->getUrl('admin_tcs/adminhtml_sales_order_index/submit')) ?>"
+                  id="submitTCS" method="post">
+                <input type="hidden" name="form_key"
+                       value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>"/>
+                <table cellspacing="0" class="form-list" style="width:100%; margin: 0 auto;">
+                    <tbody>
+
+                    <tr>
+                        <td><label>Consignee Name:</label>
+                            <input class="input-text required-entry" id="consigneeName" name="consigneeName"
+                                   value="<?php echo $form_data['consigneeName']; ?>" type="text">
+                            <br><small>Name of the receiver to whom the shipment will be delivered</small>
+                        </td>
+
+                        <td><label>Consignee Address:</label>
+                            <input class="input-text required-entry" id="consigneeAddress" name="consigneeAddress"
+                                   value="<?php echo $form_data['consigneeAddress']; ?>" type="text">
+                            <br><small>Address where the shipment will be delivered</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Consignee Mob No:</label>
+                            <input class="input-text required-entry" id="consigneeMobNo" name="consigneeMobNo"
+                                   value="<?php echo $form_data['consigneeMobNo']; ?>" type="text">
+                            <br><small>Mobile number of the receiver</small>
+                        </td>
+                        <td><label>Consignee Email:</label>
+                            <input class="input-text required-entry" id="consigneeEmail" name="consigneeEmail"
+                                   value="<?php echo $form_data['consigneeEmail']; ?>" type="text">
+                            <br><small>Email address of the coordinator for pickup</small>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Origin City Name:</label>
+                            <input class="input-text required-entry" id="originCityName" name="originCityName"
+                                   value="<?php echo $form_data['originCityName']; ?>" type="text" readonly>
+                            <br><small>To update origin city go to System > Configuration > Tcs Settings </small>
+                        </td>
+
+                        <td><label>Destination City
+                                Name:</label> <?php //echo $helper->checkCityStatus($form_data['destinationCityName']); ?>
+                            <select class="input-text required-entry" id="destinationCityName"
+                                    name="destinationCityName">
+                                <option value="">Please select City</option>
+                                <?php foreach($cities as $key=>$value){ ?>
+                                    <?php $selected = strtolower($value->areaName)==strtolower($form_data['destinationCityName'])?'selected':''; ?>
+                                    <option value="<?php echo $value->areaName ?>" <?php echo $selected ?>><?php echo $value->areaName ?></option>
+                                <?php } ?>
+                            </select>
+                            <br><small>String name of the city from where the shipment will be delivered</small>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="2"><label>Product Details:</label>
+                            <input class="input-text required-entry" id="productDetails" name="productDetails"
+                                   value="<?php echo $form_data['productDetails']; ?>" style=" width: 97%; "
+                                   type="text">
+                            <br><small>Nature and details of the item(s) in the order to be delivered</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Pieces:</label>
+                            <input class="input-text required-entry" id="pieces" name="pieces"
+                                   value="<?php echo $form_data['pieces']; ?>" type="text">
+                            <br><small>Number of pieces / item(s)</small>
+                        </td>
+                        <td><label>Weight:</label>
+                            <input class="input-text required-entry" id="weight" name="weight"
+                                   value="<?php echo $form_data['weight']; ?>" type="text">
+                            <br><small>weight of the shipment</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Is the item fragile/Sensitive?:</label>
+                            <select class="input-text required-entry" id="fragile" name="fragile" type="text">
+                                <option value="No" selected="selected">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                            <br><small>Is the item fragile/Sensitive?</small>
+                        </td>
+                        <td><label>Service:</label>
+                            <select class="input-text required-entry" id="Service" name="Service" type="text">
+                                <option value="O" selected="selected">Overnight</option>
+                            </select>
+                            <br><small>Courier Service you want to use to deliver item.</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>Insurance Value:</label>
+                            <input class="input-text required-entry" id="InsuranceValue" name="InsuranceValue" value="0"
+                                   type="text">
+                            <br><small>Insurance value is insured</small>
+                        </td>
+                        <td><label>Cod Amount:</label>
+                            <input class="input-text required-entry" id="codAmount" name="codAmount"
+                                   value="<?php echo $form_data['codAmount']; ?>" type="text">
+                            <br><small>The amount to be collected at the time of delivery</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><label>Remarks:</label>
+                            <textarea class="input-text required-entry" id="Remarks" name="Remarks"
+                                      style=" width: 97%; "><?php echo $form_data['Remarks']; ?></textarea>
+                            <br><small>Any reference or remarks regarding the delivery</small>
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+                <input class="input-text required-entry" id="codAmount" name="codAmount"
+                       value="<?php echo $form_data['codAmount']; ?>" type="text">
+                <input class="input-text required-entry" id="order_id" name="order_id"
+                       value="<?php echo $form_data['order_id']; ?>" type="hidden">
+                <input class="input-text required-entry" id="custRefNo" name="custRefNo"
+                       value="<?php echo $form_data['custRefNo']; ?>" type="hidden">
+                <br>
+                <?php if ($error == 0) { ?>
+                    <button class="form-button-alt" onclick="submitTCS.submit();" type="button"><span>Submit Your Request</span>
+                    </button>
+                <?php } ?>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //< ![CDATA[
+    var submitTCS = new varienForm('submitTCS');
+    //]]>
+</script>
+
+<style>
+    .wrapper {
+        min-width: 100%;
+    }
+
+    input.input-text, textarea {
+        padding: 4px;
+        width: 95%;
+    }
+
+    td {
+        padding-bottom: 5px;
+    }
+
+    small {
+        font-size: 1.0em;
+        width: 100%;
+    }
+
+    label {
+        color: #333;
+        font-size: 1.2em;
+    }
+
+    .entry-edit .entry-edit-head h4 {
+        font-size: 1.5em;
+        padding: 10px;
+    }
+
+    select {
+        min-height: 24px;
+        width: 99%;
+    }
+</style>

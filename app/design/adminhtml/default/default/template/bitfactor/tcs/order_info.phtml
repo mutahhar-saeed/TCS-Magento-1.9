@@ -1,0 +1,81 @@
+<?php
+$order = Mage::registry('sales_order');
+$enable = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/enable_disable');
+$client_id = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/bitfactor_tcs_client_id');
+$userName = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/api_username');
+$account_id = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/account_id');
+$shippingInfo = $this->getSippingInfo();
+?>
+<?php if ($this->isInvoiceCreated()) { ?>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4><?php echo 'TCS Courier Information'; ?></h4>
+        </div>
+        <fieldset>
+            <p>
+                <?php if ($order->canShip() && empty($shippingInfo['cn'][0])) {
+                    if ($enable) {
+                        if ($client_id == '' or $userName == '' or $account_id == '') { ?>
+                            Please configure TCS to complete further process.<br/>
+                        <?php } else {
+                            ?>
+                            <a href="javascript:void(0)" onclick='javascript:showTcsPopup()'>
+                                <button class="">
+                                    <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . '/frontend/base/default/images/bitfactor/tcs/logo.png' ?>"
+                                         alt="TCS">
+                                </button>
+                            </a>
+                            To Book Shipment using TCS Please
+                            <a href="javascript:void(0)" onclick='javascript:showTcsPopup()'>
+                                Click Here
+                            </a>
+                            for TCS Book Shipment
+                        <?php }
+                    } ?>
+                <?php } else if (isset($shippingInfo['tracking_data']['carrier_code']) && $shippingInfo['tracking_data']['carrier_code'] == 'tcs') { ?>
+            <p>Your order has been booked with TCS </p>
+            <p>Consignment No : <?php echo $shippingInfo['cn'][0] ?></p>
+            <p>Booking Date : <?php echo $shippingInfo['tracking_data']['created_at'] ?></p>
+            <?php } else {
+                echo '<p>Your Order has been booked with Other courier</p>';
+            } ?>
+            </p>
+        </fieldset>
+
+    </div>
+
+    <script type="text/javascript">
+
+        var tcsBookingUrlPopUp = "<?php echo $this->escapeHtml(
+            Mage::helper("adminhtml")->getUrl(
+                'admin_tcs/adminhtml_sales_order_index/add',
+                array('order_id' => $order->getId())
+            )
+        ) ?>";
+
+        function showTcsPopup() {
+            oPopup = new Window({
+                id: 'popup_window',
+                className: 'magento',
+                title: 'Shipping Booking',
+                url: tcsBookingUrlPopUp,
+                width: 820,
+                height: 600,
+                minimizable: false,
+                maximizable: false,
+                closable: true,
+                destroyOnClose: true,
+                onClose: function (param, el) {
+
+                    window.parent.location.reload();
+                }
+            });
+            oPopup.setZIndex(1);
+            oPopup.showCenter(true);
+        }
+
+        function closePopup() {
+            Window.reload();
+        }
+    </script>
+<?php } ?>
