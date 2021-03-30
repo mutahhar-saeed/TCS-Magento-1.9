@@ -4,6 +4,7 @@ class BitFactor_Tcs_Helper_Data extends Mage_Core_Helper_Abstract
 {
     public function getTcsCitiesData()
     {
+        $clientId = Mage::getStoreConfig('bitfactor_tcs_section/bitfactor_tcs_group/bitfactor_tcs_client_id');
         $data = Mage::app()->loadCache('tcs_cities_list');
         if (empty($data)) {
             $curl = curl_init();
@@ -16,7 +17,7 @@ class BitFactor_Tcs_Helper_Data extends Mage_Core_Helper_Abstract
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "GET",
                 CURLOPT_HTTPHEADER => [
-                    "X-IBM-Client-Id: f0d66692-40b9-4cad-a90a-2f2c2234e062",
+                    "X-IBM-Client-Id: ".$clientId,
                     "accept: application/json"
                 ],
             ]);
