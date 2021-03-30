@@ -16,6 +16,12 @@
                 <class>BitFactor_Tcs_Helper</class>
             </tcs>
         </helpers>
+        <models>
+            <tcs>
+                <class>BitFactor_Tcs_Model</class>
+                <resourceModel>tcs_mysql4</resourceModel>
+            </tcs>
+	    </models>
     </global>
     <admin>
         <routers>
@@ -47,7 +53,6 @@
                 </observers>
             </core_block_abstract_to_html_after>
         </events>
-
         <layout>
             <updates>
                 <bitfactor_tcs>
@@ -62,5 +67,15 @@
                 <origin_city>Karachi</origin_city>
             </bitfactor_tcs_group>
         </bitfactor_tcs_section>
+        <carriers>
+            <tcscourier>
+                <active>1</active>
+                <model>tcs/carrier_tcscourier</model>
+                <name>Tcs</name>
+                <title>TCS </title>
+                <description>Tcs Courier</description>
+                <sort_order>10</sort_order>
+            </tcscourier>
+        </carriers>
     </default>
 </config> 
