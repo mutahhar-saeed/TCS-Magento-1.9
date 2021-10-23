@@ -18,7 +18,8 @@ class BitFactor_Tcs_Helper_Data extends Mage_Core_Helper_Abstract
                 CURLOPT_CUSTOMREQUEST => "GET",
                 CURLOPT_HTTPHEADER => [
                     "X-IBM-Client-Id: ".$clientId,
-                    "accept: application/json"
+                    "accept: application/json",
+                    "Content-Type: application/json"
                 ],
             ]);
             $err = curl_error($curl);
@@ -32,4 +33,3 @@ class BitFactor_Tcs_Helper_Data extends Mage_Core_Helper_Abstract
         return json_decode($data)->allCities;
     }
 }
-	 
